@@ -7,7 +7,16 @@ export default class App extends React.Component<any, {markup:string}>
     constructor(props)
     {
         super(props);
-        this.state = {markup:"item1:2017-03-01\nitem2:2017-05-01"};
+        let s = "";
+        s += "2016-11-28:G0\n";
+        s += "2017-04-28:G1\n";
+        s += "2017-08-28:G2\n";
+        s += "2017-10-15:Staldtest\n";
+        s += "2017-12-15:G3\n";
+
+        s += "2018-01-01:Release";
+        this.state = {markup:s};
+
     }
 
     onChange()
