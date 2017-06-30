@@ -22414,13 +22414,7 @@ var App = (function (_super) {
     __extends(App, _super);
     function App(props) {
         var _this = _super.call(this, props) || this;
-        var s = "";
-        s += "2016-11-28:G0\n";
-        s += "2017-04-28:G1\n";
-        s += "2017-08-28:G2\n";
-        s += "2017-10-15:Staldtest\n";
-        s += "2017-12-15:G3\n";
-        s += "2018-01-01:Release";
+        var s = "\n#FOX 3.4.1\n##2017-07-05\n- KIK fejl rettet\n- user notification rettet\n\n\n#FOX 3.5\n##2018-01-01\n- backup\n- dashboard\n- fejl rettelser\n- auto upgrade\n\n#FOX 3.6\n##2018-06-01\n- layer 1\n- forbedringer til breeder modul\n\n        ";
         _this.state = { markup: s };
         return _this;
     }
@@ -22486,16 +22480,40 @@ var Viz = (function (_super) {
         try {
             var data = [];
             var lines = this.props.markup.split('\n');
+            var current = null;
             var i = 0;
             for (var _i = 0, lines_1 = lines; _i < lines_1.length; _i++) {
                 var line = lines_1[_i];
-                var parts = line.split(":");
-                if (parts.length == 2) {
-                    var item = { id: i, content: parts[1], start: parts[0] };
+                if (line.indexOf("##") == 0) {
+                    current.start = line.substr(1, line.length - 1);
+                }
+                else if (line.indexOf("#") == 0) {
+                    if (current != null) {
+                        data.push(current);
+                    }
+                    current = { id: i++, content: "<b>" + line.substr(1, line.length - 1) + "</b>", start: "", style: "text-align: left" };
+                }
+                else if (line.length > 0) {
+                    current.content += "<br/>" + line;
+                    console.log(line);
+                }
+            }
+            if (current != null) {
+                data.push(current);
+            }
+            console.log();
+            /*
+            let i = 0;
+            for (let line of lines)
+            {
+                let parts = line.split(":");
+                if (parts.length == 2)
+                {
+                    let item = {id:i, content:parts[1], start:parts[0]};
                     data.push(item);
                     i++;
                 }
-            }
+            }*/
             return data;
         }
         catch (ex) {

@@ -33,6 +33,38 @@ export default class Viz extends React.Component<{markup:string}, any>
         {
             let data = [];
             let lines = this.props.markup.split('\n');
+
+            let current = null;
+            let i = 0;
+            for (let line of lines)
+            {
+                if (line.indexOf("##") == 0) // ##
+                {
+                    current.start = line.substr(1, line.length-1);
+                }
+                else if (line.indexOf("#") == 0) // #
+                {
+                    if (current != null)
+                    {
+                        data.push(current);
+                    }
+
+                    current = {id:i++, content:"<b>" + line.substr(1, line.length-1) + "</b>", start:"", style:"text-align: left"};
+                }
+                else if (line.length > 0)
+                {
+                    current.content += "<br/>" + line;
+                    console.log(line);
+                }
+            }
+
+            if (current != null)
+            {
+                data.push(current);
+            }
+
+            console.log()
+            /*
             let i = 0;
             for (let line of lines)
             {
@@ -43,7 +75,7 @@ export default class Viz extends React.Component<{markup:string}, any>
                     data.push(item);
                     i++;
                 }
-            }
+            }*/
 
             return data;
         }

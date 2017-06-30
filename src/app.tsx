@@ -7,14 +7,27 @@ export default class App extends React.Component<any, {markup:string}>
     constructor(props)
     {
         super(props);
-        let s = "";
-        s += "2016-11-28:G0\n";
-        s += "2017-04-28:G1\n";
-        s += "2017-08-28:G2\n";
-        s += "2017-10-15:Staldtest\n";
-        s += "2017-12-15:G3\n";
+        let s = `
+#FOX 3.4.1
+##2017-07-05
+- KIK fejl rettet
+- user notification rettet
 
-        s += "2018-01-01:Release";
+
+#FOX 3.5
+##2018-01-01
+- backup
+- dashboard
+- fejl rettelser
+- auto upgrade
+
+#FOX 3.6
+##2018-06-01
+- layer 1
+- forbedringer til breeder modul
+
+        `;
+
         this.state = {markup:s};
 
     }
