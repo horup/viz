@@ -22426,10 +22426,13 @@ var App = (function (_super) {
         return _this;
     }
     App.prototype.onChange = function () {
-        var markup = this.textarea.value;
-        this.setState({ markup: markup });
-        // let zipped = gzip.zip(markup);
-        location.hash = btoa(markup);
+        try {
+            var markup = this.textarea.value;
+            this.setState({ markup: markup });
+            location.hash = btoa(markup);
+        }
+        catch (e) {
+        }
     };
     App.prototype.render = function () {
         var _this = this;
@@ -22475,10 +22478,14 @@ var Viz = (function (_super) {
         this.refresh();
     };
     Viz.prototype.refresh = function () {
-        var data = this.parseMarkup();
-        this.timeline.setItems(data);
-        this.timeline.fit();
-        this.timeline.redraw();
+        try {
+            var data = this.parseMarkup();
+            this.timeline.setItems(data);
+            this.timeline.fit();
+            this.timeline.redraw();
+        }
+        catch (e) {
+        }
     };
     Viz.prototype.componentDidUpdate = function (prevProps, prevState) {
         this.refresh();

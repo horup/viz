@@ -47,10 +47,16 @@ export default class App extends React.Component<any, {markup:string}>
 
     onChange()
     {
-        let markup = this.textarea.value;
-        this.setState({markup:markup});
-       // let zipped = gzip.zip(markup);
-        location.hash = btoa(markup);
+        try
+        {
+            let markup = this.textarea.value;
+            this.setState({markup:markup});
+            location.hash = btoa(markup);
+        }
+        catch(e)
+        {
+
+        }
     }
 
     render()

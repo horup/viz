@@ -15,10 +15,17 @@ export default class Viz extends React.Component<{markup:string}, any>
 
     refresh()
     {
-        let data = this.parseMarkup();
-        this.timeline.setItems(data);
-        this.timeline.fit();
-        this.timeline.redraw();
+        try
+        {
+            let data = this.parseMarkup();
+            this.timeline.setItems(data);
+            this.timeline.fit();
+            this.timeline.redraw();
+        }
+        catch(e)
+        {
+            
+        }
     }
 
     componentDidUpdate(prevProps, prevState)
