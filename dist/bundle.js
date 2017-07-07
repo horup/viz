@@ -22415,23 +22415,31 @@ var App = (function (_super) {
     function App(props) {
         var _this = _super.call(this, props) || this;
         var s = "\n#FOX 3.4.1\n##2017-07-05\n- KIK fejl rettet\n- user notification rettet\n\n\n#FOX 3.5\n##2018-01-01\n- backup\n- dashboard\n- fejl rettelser\n- auto upgrade\n\n#FOX 3.6\n##2018-06-01\n- layer 1\n- forbedringer til breeder modul\n\n        ";
+        if (location.hash.length > 1) {
+            var base64 = location.hash.substr(1, location.hash.length);
+            s = atob(base64);
+        }
+        else {
+            location.hash = btoa(s);
+        }
         _this.state = { markup: s };
         return _this;
     }
     App.prototype.onChange = function () {
-        this.setState({ markup: this.textarea.value });
+        var markup = this.textarea.value;
+        this.setState({ markup: markup });
+        // let zipped = gzip.zip(markup);
+        location.hash = btoa(markup);
     };
     App.prototype.render = function () {
         var _this = this;
         return (React.createElement("div", { className: "container-fluid" },
             React.createElement("div", { className: "row" },
-                React.createElement("div", { className: "col-sm-12" },
-                    React.createElement("h3", null, "VIZ"))),
+                React.createElement("div", { className: "col-m-12" },
+                    React.createElement(viz_1.default, { markup: this.state.markup }))),
             React.createElement("div", { className: "row" },
-                React.createElement("div", { className: "col-sm-2" },
-                    React.createElement("textarea", { value: this.state.markup, ref: function (ref) { return _this.textarea = ref; }, rows: 30, onChange: function () { return _this.onChange(); }, style: { width: '100%', resize: 'none' } })),
-                React.createElement("div", { className: "col-sm-10" },
-                    React.createElement(viz_1.default, { markup: this.state.markup })))));
+                React.createElement("div", { className: "col-m-12" },
+                    React.createElement("textarea", { value: this.state.markup, ref: function (ref) { return _this.textarea = ref; }, rows: 15, onChange: function () { return _this.onChange(); }, style: { width: '100%', resize: 'none' } })))));
     };
     return App;
 }(React.Component));
@@ -22468,7 +22476,6 @@ var Viz = (function (_super) {
     };
     Viz.prototype.refresh = function () {
         var data = this.parseMarkup();
-        console.log(JSON.stringify(data));
         this.timeline.setItems(data);
         this.timeline.fit();
         this.timeline.redraw();
@@ -22495,13 +22502,11 @@ var Viz = (function (_super) {
                 }
                 else if (line.length > 0) {
                     current.content += "<br/>" + line;
-                    console.log(line);
                 }
             }
             if (current != null) {
                 data.push(current);
             }
-            console.log();
             /*
             let i = 0;
             for (let line of lines)

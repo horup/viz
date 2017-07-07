@@ -16,7 +16,6 @@ export default class Viz extends React.Component<{markup:string}, any>
     refresh()
     {
         let data = this.parseMarkup();
-        console.log(JSON.stringify(data));
         this.timeline.setItems(data);
         this.timeline.fit();
         this.timeline.redraw();
@@ -54,7 +53,6 @@ export default class Viz extends React.Component<{markup:string}, any>
                 else if (line.length > 0)
                 {
                     current.content += "<br/>" + line;
-                    console.log(line);
                 }
             }
 
@@ -63,7 +61,6 @@ export default class Viz extends React.Component<{markup:string}, any>
                 data.push(current);
             }
 
-            console.log()
             /*
             let i = 0;
             for (let line of lines)
