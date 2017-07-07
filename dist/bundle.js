@@ -22425,6 +22425,14 @@ var App = (function (_super) {
         _this.state = { markup: s };
         return _this;
     }
+    App.prototype.inIframe = function () {
+        try {
+            return window.self !== window.top;
+        }
+        catch (e) {
+            return true;
+        }
+    };
     App.prototype.onChange = function () {
         try {
             var markup = this.textarea.value;
@@ -22440,9 +22448,9 @@ var App = (function (_super) {
             React.createElement("div", { className: "row" },
                 React.createElement("div", { className: "col-m-12" },
                     React.createElement(viz_1.default, { markup: this.state.markup }))),
-            React.createElement("div", { className: "row" },
+            this.inIframe() == false ? (React.createElement("div", { className: "row" },
                 React.createElement("div", { className: "col-m-12" },
-                    React.createElement("textarea", { value: this.state.markup, ref: function (ref) { return _this.textarea = ref; }, rows: 15, onChange: function () { return _this.onChange(); }, style: { width: '100%', resize: 'none' } })))));
+                    React.createElement("textarea", { value: this.state.markup, ref: function (ref) { return _this.textarea = ref; }, rows: 15, onChange: function () { return _this.onChange(); }, style: { width: '100%', resize: 'none' } })))) : null));
     };
     return App;
 }(React.Component));

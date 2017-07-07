@@ -6,6 +6,16 @@ import * as gzip from 'gzip-js';
 
 export default class App extends React.Component<any, {markup:string}>
 {
+    inIframe () 
+    {
+        try {
+            return window.self !== window.top;
+        } catch (e) {
+            return true;
+        }
+    }
+
+
     textarea:HTMLTextAreaElement;
     constructor(props)
     {
@@ -68,11 +78,15 @@ export default class App extends React.Component<any, {markup:string}>
                          <Viz markup={this.state.markup}/>
                     </div>
                 </div>
-                <div className="row">
-                     <div className="col-m-12">
-                        <textarea value={this.state.markup} ref={(ref)=>this.textarea=ref} rows={15} onChange={()=>this.onChange()} style={{width:'100%', resize:'none'}} />
+                {this.inIframe() == false ? (
+                    <div className="row">
+                        <div className="col-m-12">
+                            <textarea value={this.state.markup} ref={(ref)=>this.textarea=ref} rows={15} onChange={()=>this.onChange()} style={{width:'100%', resize:'none'}} />
+                        </div>
                     </div>
-                </div>
+                ) : null
+                }
+                
             </div>
         )
     }
